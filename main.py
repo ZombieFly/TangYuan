@@ -53,10 +53,10 @@ def main(Config: config.Config):
         if html is None:
             return
 
-        html = sub(r'font-size: 13px;line-height: 18px;',
-                   'font-size: 26px;line-height: 42px;', html)
+        html = sub(
+            r'<html>', '<head><link rel="stylesheet" href="style.css"></head><html>', html)
 
-        image: bytes = cast(bytes, from_string(html, None))
+        image: bytes = cast(bytes, from_string(html, None, css="style.css"))
         cb.write_img(image, Config.image_type or 'BMP')
 
 
