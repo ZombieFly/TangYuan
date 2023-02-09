@@ -2,10 +2,10 @@ from re import sub
 from io import BytesIO
 from typing import Optional, cast
 
-import imgkit
-import win32con
-from PIL import Image
 import win32clipboard as wc
+from win32con import CF_DIB
+from imgkit import from_string
+from PIL.Image import open as ImageOpen
 
 import config
 
@@ -42,9 +42,9 @@ class Clipboard:
             raise ValueError('Clipboard is not contain html') from e
 
     def write_img(self, data: bytes, _type: str) -> Optional[int]:
-        out = Image.open(BytesIO(data))
+        out = ImageOpen(BytesIO(data))
         out.save(fp := BytesIO(), _type)
-        return self._clipboard.SetClipboardData(win32con.CF_DIB, fp.getvalue()[14:])
+        return self._clipboard.SetClipboardData(CF_DIB, fp.getvalue()[14:])
 
 
 def main(Config: config.Config):
@@ -56,7 +56,7 @@ def main(Config: config.Config):
         html = sub(r'font-size: 13px;line-height: 18px;',
                    'font-size: 26px;line-height: 42px;', html)
 
-        image: bytes = cast(bytes, imgkit.from_string(html, None))
+        image: bytes = cast(bytes, from_string(html, None))
         cb.write_img(image, Config.image_type or 'BMP')
 
 
