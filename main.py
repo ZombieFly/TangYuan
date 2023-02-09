@@ -54,9 +54,13 @@ def main(Config: config.Config):
             return
 
         html = sub(
-            r'<html>', '<head><link rel="stylesheet" href="style.css"></head><html>', html)
+            r'<html>', '<html><head><link rel="stylesheet" href="style.css"></head>', html)
 
-        image: bytes = cast(bytes, from_string(html, None, css="style.css"))
+        image: bytes = cast(bytes, from_string(html, None, css="style.css",
+                                               options={
+                                                   'enable-local-file-access': None}
+                                               )
+                            )
         cb.write_img(image, Config.image_type or 'BMP')
 
 
