@@ -56,6 +56,11 @@ def main(Config: config.Config):
         html = sub(
             r'<html>', '<html><head><link rel="stylesheet" href="style.css"></head>', html)
 
+        html = sub(
+            r'<body>', '<body><div class="box"><div id="header"><span style="color: #c9d1d9">Hello World</span></div>', html)
+
+        html = sub(r'</body>', '</div></body>', html)
+
         image: bytes = cast(bytes, from_string(html, None, css="style.css",
                                                options={
                                                    'enable-local-file-access': None}
