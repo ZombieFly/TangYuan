@@ -1,0 +1,2 @@
+python -m nuitka --mingw64 --standalone --output-dir=out --show-progress --show-memory --windows-product-name=demo --windows-product-version=0.0.1 --nofollow-import-to=pyquery,PIL,email, main.py
+copy .\out\main.dist\main.exe .\out\out\main.exe
