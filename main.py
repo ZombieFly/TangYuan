@@ -48,11 +48,8 @@ class Clipboard:
         try:
             raw = str(cast(bytes, wc.GetClipboardData(wc.EnumClipboardFormats(0))),
                       encoding='utf-8')
-        except TypeError as e:
-            raise ValueError('Clipboard is not contain html') from e
-        try:
             return '\r\n'.join(raw.split('\r\n')[6:])
-        except IndexError as e:
+        except (IndexError, TypeError) as e:
             raise ValueError('Clipboard is not contain html') from e
 
     def write_img(self, data: bytes, _type: str) -> Optional[int]:
@@ -90,6 +87,8 @@ if __name__ == '__main__':
     except OSError as os_error:
         with PrintWithoutHide(os_error.args[0]):
             pass
+    except ValueError:
+        pass
     except Exception as e:
         with PrintWithoutHide(str(e)):
             pass
