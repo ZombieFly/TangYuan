@@ -88,7 +88,7 @@ if __name__ == '__main__':
         with PrintWithoutHide(os_error.args[0]):
             pass
     except ValueError:
-        pass
+        print("Success, but clipboard is not contain html")
     except Exception as e:
         with PrintWithoutHide(str(e)):
             pass
