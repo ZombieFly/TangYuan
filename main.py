@@ -5,11 +5,12 @@ from io import BytesIO
 from typing import Optional, cast
 
 import win32clipboard as wc
-from win32con import CF_DIB
 from imgkit import from_string
 from PIL.Image import open as ImageOpen
 
 import config
+
+CF_DIB = 8
 
 
 class PrintWithoutHide:
