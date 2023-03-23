@@ -1,3 +1,4 @@
+from toml import TomlDecodeError
 from utils import PrintWithoutHide
 
 
@@ -20,6 +21,18 @@ class TYException(Exception):
     def ImportError(self, exp: ImportError):
         with PrintWithoutHide():
             print("Module missing, please check file integrity.")
+
+    def FileNotFoundError(self, exp: FileNotFoundError):
+        with PrintWithoutHide():
+            print("config.toml not found, please check file integrity.")
+
+    def TomlDecodeError(self, exp: TomlDecodeError):
+        with PrintWithoutHide(repr(exp)):
+            print("config.toml is not a valid TOML file.")
+
+    def TypeError(self, exp: TypeError):
+        with PrintWithoutHide(repr(exp)):
+            print("config.toml has a type error.")
 
     def Exception(self, exp: Exception):
         with PrintWithoutHide(repr(exp)):
